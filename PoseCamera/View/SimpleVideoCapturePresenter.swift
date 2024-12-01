@@ -28,10 +28,6 @@ final class SimpleVideoCapturePresenter: ObservableObject {
         }
     }
     
-    var previewLayer: CALayer {
-        return interactor.previewLayer!
-    }
-    
     var overlayView: UIImageView {
         return interactor.overlayView!
     }

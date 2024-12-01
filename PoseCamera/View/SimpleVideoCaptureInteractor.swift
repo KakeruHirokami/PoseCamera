@@ -12,7 +12,7 @@ import AVKit
 
 final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
     private let captureSession = AVCaptureSession()
-    @Published var previewLayer: AVCaptureVideoPreviewLayer?
+    //@Published var previewLayer: AVCaptureVideoPreviewLayer?
     private var captureDevice: AVCaptureDevice?
     @Published var showPhoto: Bool = false
     @Published var photoImage: UIImage?
@@ -39,8 +39,8 @@ final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
     
     /// - Tag: CreateCaptureSession
     func setupAVCaptureSession() {
-        print(#function)
-        captureSession.sessionPreset = .photo
+        //print(#function)
+        captureSession.sessionPreset = .high
         if let availableDevice = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .back).devices.first {
             captureDevice = availableDevice
         }
@@ -55,10 +55,10 @@ final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
             print(error.localizedDescription)
         }
         
-        let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        previewLayer.name = "CameraPreview"
-        previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        self.previewLayer = previewLayer
+        //let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        //previewLayer.name = "CameraPreview"
+        //previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        //self.previewLayer = previewLayer
         //self.dataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String:kCVPixelFormatType_32BGRA]
         
         if captureSession.canAddOutput(self.dataOutput) {
@@ -81,6 +81,7 @@ final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
         print("Prepare PoseEstimator")
         let overlayView = OverlayView()
         overlayView.image = UIImage(systemName: "photo")
+        overlayView.contentMode = .scaleAspectFit
         self.overlayView = overlayView
         do {
             self.poseEstimator = try MoveNet(

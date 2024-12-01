@@ -15,7 +15,6 @@ struct SimpleVideoCaptureView: View {
     
     var body: some View {
         ZStack {
-            //CALayerView(caLayer: presenter.previewLayer)
             PoseEstimateView(overlayView: presenter.overlayView)
             Button(action: {
                 presenter.apply(inputs: .tappedRecordingButton)
