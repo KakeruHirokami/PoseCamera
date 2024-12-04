@@ -18,7 +18,7 @@ final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
     @Published var photoImage: UIImage?
     private let dataOutput = AVCaptureMovieFileOutput()
     private let videoOutput = AVCaptureVideoDataOutput()
-    private var captureState: captureState = .wait // VideoCapture State
+    @Published var isRecording: Bool = false
     
     // Pose estimation model configs
     private var modelType: ModelType = Constants.defaultModelType
@@ -32,14 +32,15 @@ final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
     @Published var overlayView: OverlayView?
     var isEstimating = false   // Flag to make sure there's only one frame processed at each moment.
     
-    enum captureState: Int {
-        case wait
-        case capturing
-    }
+    // VideoWriter
+    private var videoWriter: AVAssetWriter!
+    private var videoWriterVideoInput: AVAssetWriterInput!
+    private var videoWriterPixelBufferAdaptor: AVAssetWriterInputPixelBufferAdaptor!
+    private var videoWriterAudioInput: AVAssetWriterInput!
+    private var recordingStartTime: CMTime?
     
     /// - Tag: CreateCaptureSession
     func setupAVCaptureSession() {
-        //print(#function)
         captureSession.sessionPreset = .high
         if let availableDevice = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .back).devices.first {
             captureDevice = availableDevice
@@ -55,18 +56,12 @@ final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
             print(error.localizedDescription)
         }
         
-        //let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        //previewLayer.name = "CameraPreview"
-        //previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        //self.previewLayer = previewLayer
-        //self.dataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String:kCVPixelFormatType_32BGRA]
-        
         if captureSession.canAddOutput(self.dataOutput) {
             captureSession.addOutput(self.dataOutput)
         }
         captureSession.commitConfiguration()
         
-        print("VideoOutput set")
+        // Setup VideoOutput
         let dataOutputQueue = DispatchQueue(
             label: "video data queue",
             qos: .userInitiated,
@@ -78,9 +73,9 @@ final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
         videoOutput.alwaysDiscardsLateVideoFrames = true
         videoOutput.setSampleBufferDelegate(self, queue: dataOutputQueue)
         
-        print("Prepare PoseEstimator")
+        // Setup PoseEstimator
         let overlayView = OverlayView()
-        overlayView.image = UIImage(systemName: "photo")
+        overlayView.image = UIImage()
         overlayView.contentMode = .scaleAspectFit
         self.overlayView = overlayView
         do {
@@ -91,6 +86,48 @@ final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
             )
         } catch let error {
             print("model loading error: \(error.localizedDescription)")
+        }
+        self.setupVideoWriter()
+        // Warm up VideoWriter
+        self.videoWriter.startWriting()
+        self.videoWriter.startSession(atSourceTime: .zero)
+        videoWriterVideoInput.markAsFinished()
+        videoWriterAudioInput.markAsFinished()
+        videoWriter.finishWriting {
+            print("Warm up finished")
+            self.setupVideoWriter()
+        }
+    }
+    
+    func setupVideoWriter() {
+        if recordingStartTime != nil {
+            recordingStartTime = nil
+        }
+        let dimensions = CMVideoFormatDescriptionGetDimensions(self.captureDevice!.activeFormat.formatDescription)
+        let videoSize: CGSize = CGSize(width: CGFloat(dimensions.height), height: CGFloat(dimensions.width))
+        let outputURL: URL = self.makeUniqueTempFileURL(extension: "mov")
+        self.videoWriter = try! AVAssetWriter(outputURL: outputURL, fileType: .mov)
+        let videoOutputSettings: [String: Any] = [
+            AVVideoCodecKey: AVVideoCodecType.h264,
+            AVVideoWidthKey: videoSize.width,
+            AVVideoHeightKey: videoSize.height
+        ]
+        self.videoWriterVideoInput = AVAssetWriterInput(mediaType: .video, outputSettings: videoOutputSettings)
+        self.videoWriterVideoInput.expectsMediaDataInRealTime = true
+        self.videoWriterPixelBufferAdaptor = AVAssetWriterInputPixelBufferAdaptor(assetWriterInput: self.videoWriterVideoInput, sourcePixelBufferAttributes: [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)])
+        let audioOutputSettings: [String: Any] = [
+            AVFormatIDKey: kAudioFormatMPEG4AAC,
+            AVNumberOfChannelsKey: 2,
+            AVSampleRateKey: 44100,
+            AVEncoderBitRateKey: 128000
+        ]
+        self.videoWriterAudioInput = AVAssetWriterInput(mediaType: .audio, outputSettings: audioOutputSettings)
+        self.videoWriterAudioInput.expectsMediaDataInRealTime = true
+        if self.videoWriter.canAdd(self.videoWriterVideoInput) {
+            self.videoWriter.add(self.videoWriterVideoInput)
+        }
+        if self.videoWriter.canAdd(self.videoWriterAudioInput) {
+            self.videoWriter.add(self.videoWriterAudioInput)
         }
     }
     
@@ -109,18 +146,38 @@ final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
     }
     
     func recordVideo() {
-        switch self.captureState {
-        case .wait:
-            AudioServicesPlaySystemSound(1117)
-            let fileURL: URL = self.makeUniqueTempFileURL(extension: "mov")
-            self.dataOutput.startRecording(to: fileURL, recordingDelegate: self)
-            self.captureState = .capturing
-            
-        case .capturing:
-            AudioServicesPlaySystemSound(1118)
-            self.dataOutput.stopRecording()
-            self.captureState = .wait
+        switch videoWriter.status {
+        case .unknown:
+            print("AssetWriter status: unknown")
+        case .writing:
+            print("AssetWriter status: writing")
+        case .completed:
+            print("AssetWriter status: completed")
+        case .cancelled:
+            print("AssetWriter status: cancelled")
+        @unknown default:
+            print("AssetWriter status: unknown default case")
         }
+        if isRecording {
+            AudioServicesPlaySystemSound(1118)
+            if videoWriter.status == .writing {
+                // Finish record
+                videoWriterVideoInput.markAsFinished()
+                videoWriterAudioInput.markAsFinished()
+                videoWriter.finishWriting { [weak self] in
+                    guard let self = self else { return }
+                    let outputURL = self.videoWriter.outputURL
+                    self.saveVideoToPhotoLibrary(url: outputURL)
+                }
+            }
+        } else {
+            AudioServicesPlaySystemSound(1117)
+            if videoWriter.status == .unknown {
+                self.videoWriter.startWriting()
+                self.videoWriter.startSession(atSourceTime: .zero)
+            }
+        }
+        self.isRecording.toggle()
     }
     
     /**
@@ -154,6 +211,87 @@ final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
     private func exifOrientationForCurrentDeviceOrientation() -> UIImage.Orientation {
         return exifOrientationForDeviceOrientation(UIDevice.current.orientation)
     }
+    
+    func writeProcessedVideoFrame(uiImage: UIImage, timestamp: CMTime) {
+        if self.isRecording,
+           self.videoWriterVideoInput.isReadyForMoreMediaData {
+            if self.recordingStartTime == nil {
+                self.recordingStartTime = timestamp
+            }
+            // UIImage -> CVPixelBuffer
+            let processedPixelBuffer: CVPixelBuffer? = self.toPixelBuffer(uiImage: uiImage)
+            // write
+            let timespan = CMTimeSubtract(timestamp, self.recordingStartTime!)
+            self.videoWriterPixelBufferAdaptor.append(processedPixelBuffer!, withPresentationTime: timespan)
+        }
+    }
+    
+    func toPixelBuffer(uiImage: UIImage) -> CVPixelBuffer? {
+        guard let cgImage = uiImage.cgImage else { return nil } // ここでエラー
+        
+        let size = uiImage.size
+        
+        let options: [CFString: Any] = [
+            kCVPixelBufferCGImageCompatibilityKey: true,
+            kCVPixelBufferCGBitmapContextCompatibilityKey: true
+        ]
+        
+        var pixelBuffer: CVPixelBuffer?
+        let status = CVPixelBufferCreate(
+            kCFAllocatorDefault,
+            Int(size.width),
+            Int(size.height),
+            kCVPixelFormatType_32ARGB, // フォーマットは必要に応じて変更
+            options as CFDictionary,
+            &pixelBuffer
+        )
+        
+        guard status == kCVReturnSuccess, let buffer = pixelBuffer else {
+            return nil
+        }
+        
+        CVPixelBufferLockBaseAddress(buffer, [])
+        let pixelData = CVPixelBufferGetBaseAddress(buffer)
+        
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let context = CGContext(
+            data: pixelData,
+            width: Int(size.width),
+            height: Int(size.height),
+            bitsPerComponent: 8,
+            bytesPerRow: CVPixelBufferGetBytesPerRow(buffer),
+            space: colorSpace,
+            bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue
+        )
+        
+        context?.draw(cgImage, in: CGRect(origin: .zero, size: size))
+        CVPixelBufferUnlockBaseAddress(buffer, [])
+        
+        return buffer
+    }
+    
+    func saveVideoToPhotoLibrary(url: URL) {
+        PHPhotoLibrary.requestAuthorization { status in
+            if status == .authorized {
+                PHPhotoLibrary.shared().performChanges({
+                    PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: url)
+                }) { saved, error in
+                    DispatchQueue.main.async {
+                        if saved {
+                            print("Video saved in photo library")
+                            self.setupVideoWriter()
+                        } else {
+                            print("Failed saving: \(String(describing: error))")
+                        }
+                    }
+                }
+            } else {
+                print("Access denided to photo library")
+            }
+        }
+    }
+
+    
 }
 
 extension SimpleVideoCaptureInteractor: AVCaptureFileOutputRecordingDelegate {
@@ -199,13 +337,15 @@ extension SimpleVideoCaptureInteractor: AVCaptureVideoDataOutputSampleBufferDele
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             return
         }
+        let presentationTimeStamp: CMTime = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
+        
         CVPixelBufferLockBaseAddress(pixelBuffer, CVPixelBufferLockFlags.readOnly)
-        runModel(pixelBuffer)
+        runModel(pixelBuffer, timestamp: presentationTimeStamp)
         CVPixelBufferUnlockBaseAddress(pixelBuffer, CVPixelBufferLockFlags.readOnly)
     }
     
     /// Run pose estimation on the input frame from the camera.
-    private func runModel(_ pixelBuffer: CVPixelBuffer) {
+    private func runModel(_ pixelBuffer: CVPixelBuffer, timestamp: CMTime) {
         // Guard to make sure that there's only 1 frame process at each moment.
         guard !isEstimating else { return }
         
@@ -234,14 +374,16 @@ extension SimpleVideoCaptureInteractor: AVCaptureVideoDataOutputSampleBufferDele
                     
                     // If score is too low, clear result remaining in the overlayView.
                     if result.score < self.minimumScore {
-                        print("no detected")
                         self.overlayView?.draw(at: image)
-                        return
+                    } else {
+                        // Visualize the pose estimation result.
+                        self.overlayView?.draw(at: image, person: result)
                     }
-                    
-                    // Visualize the pose estimation result.
-                    print("\(image.size)")
-                    self.overlayView?.draw(at: image, person: result)
+                    // Capture overlayView
+                    if self.isRecording {
+                        self.writeProcessedVideoFrame(uiImage: self.overlayView!.image!, timestamp: timestamp)
+                    }
+                    return
                 }
             } catch {
                 print("error \(error)")

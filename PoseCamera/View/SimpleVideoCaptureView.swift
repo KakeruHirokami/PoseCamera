@@ -14,32 +14,39 @@ struct SimpleVideoCaptureView: View {
     var presenter: SimpleVideoCapturePresenter
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .bottom) {
             PoseEstimateView(overlayView: presenter.overlayView)
             Button(action: {
                 presenter.apply(inputs: .tappedRecordingButton)
             }, label: {
-                Text("動画撮影")
+                if(presenter.isRecording) {
+                    ZStack {
+                        Circle()
+                            .stroke(.white, lineWidth: 5)
+                            .frame(width: 80,
+                                   height: 80,
+                                   alignment: .center)
+                            .padding()
+                        // 四角形の描画
+                        Rectangle()
+                            .fill(Color.red)
+                            .frame(width: 30, height: 30)
+                    }
+                } else {
+                    Circle()
+                        .stroke(.white, lineWidth:5)
+                        .fill(.red)
+                        .frame(width: 80,
+                               height: 80,
+                               alignment: .center)
+                        .padding()
+                }
             })
         }
+        .background(Color.black)
         .edgesIgnoringSafeArea(.all)
         .onAppear {
             self.presenter.apply(inputs: .onAppear)
-        }
-        .onDisappear {
-            self.presenter.apply(inputs: .onDisappear)
-        }
-        .sheet(isPresented: $presenter.showSheet) {
-            VStack {
-                Image(uiImage: self.presenter.photoImage)
-                    .resizable()
-                    .frame(width: 200, height: 200)
-                Button(action: {
-                    self.presenter.apply(inputs: .tappedCloseButton)
-                }) {
-                    Text("Close")
-                }
-            }
         }
     }
 }
@@ -52,7 +59,6 @@ struct CALayerView: UIViewControllerRepresentable {
         let viewController = UIViewController()
         viewController.view.layer.addSublayer(caLayer)
         caLayer.frame = viewController.view.layer.frame
-        print("caLayer Frame:", caLayer.frame)
         return viewController
     }
     
