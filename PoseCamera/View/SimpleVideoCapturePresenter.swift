@@ -13,18 +13,20 @@ final class SimpleVideoCapturePresenter: ObservableObject {
     
     private let interactor = SimpleVideoCaptureInteractor()
     @Published var isRecording: Bool = false
-    @Published var photoImage: UIImage = UIImage()
-    @Published var showSheet: Bool = false
+    @Published var recordingTime: String = "00:00:00"
     
     enum Inputs {
         case onAppear
         case tappedRecordingButton
+        case switchInAndOutCamera
     }
     
     init() {
         interactor.setupAVCaptureSession()
         interactor.$isRecording
             .assign(to: &$isRecording)
+        interactor.$recordingTime
+            .assign(to: &$recordingTime)
     }
     
     var overlayView: UIImageView {
@@ -38,6 +40,8 @@ final class SimpleVideoCapturePresenter: ObservableObject {
             break
         case .tappedRecordingButton:
             interactor.recordVideo()
+        case .switchInAndOutCamera:
+            interactor.switchInAndOutCamera()
         }
     }
 }

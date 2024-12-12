@@ -12,13 +12,13 @@ import AVKit
 
 final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
     private let captureSession = AVCaptureSession()
-    //@Published var previewLayer: AVCaptureVideoPreviewLayer?
     private var captureDevice: AVCaptureDevice?
-    @Published var showPhoto: Bool = false
-    @Published var photoImage: UIImage?
     private let dataOutput = AVCaptureMovieFileOutput()
     private let videoOutput = AVCaptureVideoDataOutput()
     @Published var isRecording: Bool = false
+    @Published var recordingTime: String = "00:00:00"
+    private let formatter = DateFormatter()
+    private var loading: Bool = false
     
     // Pose estimation model configs
     private var modelType: ModelType = Constants.defaultModelType
@@ -41,7 +41,9 @@ final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
     
     /// - Tag: CreateCaptureSession
     func setupAVCaptureSession() {
-        captureSession.sessionPreset = .high
+        formatter.dateFormat = "HH:mm:ss"
+        formatter.timeZone = TimeZone(identifier: "UTC")
+        captureSession.sessionPreset = .high    // FullHD(1920×1080)
         if let availableDevice = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .back).devices.first {
             captureDevice = availableDevice
         }
@@ -146,18 +148,6 @@ final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
     }
     
     func recordVideo() {
-        switch videoWriter.status {
-        case .unknown:
-            print("AssetWriter status: unknown")
-        case .writing:
-            print("AssetWriter status: writing")
-        case .completed:
-            print("AssetWriter status: completed")
-        case .cancelled:
-            print("AssetWriter status: cancelled")
-        @unknown default:
-            print("AssetWriter status: unknown default case")
-        }
         if isRecording {
             AudioServicesPlaySystemSound(1118)
             if videoWriter.status == .writing {
@@ -168,6 +158,7 @@ final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
                     guard let self = self else { return }
                     let outputURL = self.videoWriter.outputURL
                     self.saveVideoToPhotoLibrary(url: outputURL)
+                    recordingTime = "00:00:00"
                 }
             }
         } else {
@@ -178,6 +169,44 @@ final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
             }
         }
         self.isRecording.toggle()
+    }
+    
+    // Switch between in-camera and out-camera
+    func switchInAndOutCamera() {
+        guard !loading else { return }
+        DispatchQueue.global(qos: .background).async {
+            do {
+                self.loading = true
+                self.captureSession.stopRunning()
+                self.captureSession.beginConfiguration()
+                // Select camera in-camera or out-camera
+                if let inputs = self.captureSession.inputs as? [AVCaptureDeviceInput] {
+                    for input in inputs {
+                        if input.device.position == .back {
+                            if let availableDevice = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .front).devices.first {
+                                self.captureDevice = availableDevice
+                            }
+                            self.captureSession.removeInput(input)
+                        } else if input.device.position == .front {
+                            if let availableDevice = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .back).devices.first {
+                                self.captureDevice = availableDevice
+                            }
+                            self.captureSession.removeInput(input)
+                        }
+                    }
+                }
+                let captureDeviceInput = try AVCaptureDeviceInput(device: self.captureDevice!)
+                if self.captureSession.canAddInput(captureDeviceInput) {
+                    self.captureSession.addInput(captureDeviceInput)
+                }
+                self.captureSession.commitConfiguration()
+                self.videoOutput.connection(with: .video)?.videoRotationAngle = 90
+                self.captureSession.startRunning()
+                self.loading = false
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
     }
     
     /**
@@ -222,6 +251,7 @@ final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
             let processedPixelBuffer: CVPixelBuffer? = self.toPixelBuffer(uiImage: uiImage)
             // write
             let timespan = CMTimeSubtract(timestamp, self.recordingStartTime!)
+            recordingTime = formatter.string(from: Date(timeIntervalSince1970: timespan.seconds))    // for View
             self.videoWriterPixelBufferAdaptor.append(processedPixelBuffer!, withPresentationTime: timespan)
         }
     }
