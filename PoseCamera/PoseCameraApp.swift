@@ -10,17 +10,9 @@ import SwiftData
 
 @main
 struct PoseCameraApp: App {
-    #if targetEnvironment(simulator)
-    var body: some Scene {
-        WindowGroup {
-            SimpleVideoCaptureViewMock()
-        }
-    }
-    #else
     var body: some Scene {
         WindowGroup {
             SimpleVideoCaptureView(presenter: SimpleVideoCapturePresenter())
         }
     }
-    #endif
 }

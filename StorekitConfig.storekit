@@ -1,0 +1,143 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "FFF5815F",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "9.99",
+      "familyShareable" : false,
+      "internalID" : "6739492990",
+      "localizations" : [
+        {
+          "description" : "チップ（大）",
+          "displayName" : "チップ（大）",
+          "locale" : "ja"
+        }
+      ],
+      "productID" : "tip.l",
+      "referenceName" : "Tip(L)",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "3.99",
+      "familyShareable" : false,
+      "internalID" : "6739493015",
+      "localizations" : [
+        {
+          "description" : "チップ（中）",
+          "displayName" : "チップ（中）",
+          "locale" : "ja"
+        }
+      ],
+      "productID" : "tip.m",
+      "referenceName" : "Tip(M)",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "6739492727",
+      "localizations" : [
+        {
+          "description" : "チップ（小）",
+          "displayName" : "チップ（小）",
+          "locale" : "ja"
+        }
+      ],
+      "productID" : "tip.s",
+      "referenceName" : "Tip(S)",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "19.99",
+      "familyShareable" : false,
+      "internalID" : "6739492991",
+      "localizations" : [
+        {
+          "description" : "チップ（特大）",
+          "displayName" : "チップ（特大）",
+          "locale" : "ja"
+        }
+      ],
+      "productID" : "tip.xl",
+      "referenceName" : "Tip(XL)",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "6739467488",
+    "_developerTeamID" : "957YJ3B6F4",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 756047346.078004,
+    "_locale" : "ja",
+    "_storefront" : "JPN",
+    "_storeKitErrors" : [
+      {
+        "current" : {
+          "index" : 2,
+          "type" : "generic"
+        },
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

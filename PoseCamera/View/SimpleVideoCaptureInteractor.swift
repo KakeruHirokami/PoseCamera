@@ -154,11 +154,11 @@ final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
                 // Finish record
                 videoWriterVideoInput.markAsFinished()
                 videoWriterAudioInput.markAsFinished()
+                recordingTime = "00:00:00"
                 videoWriter.finishWriting { [weak self] in
                     guard let self = self else { return }
                     let outputURL = self.videoWriter.outputURL
                     self.saveVideoToPhotoLibrary(url: outputURL)
-                    recordingTime = "00:00:00"
                 }
             }
         } else {
@@ -177,6 +177,7 @@ final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
         DispatchQueue.global(qos: .background).async {
             do {
                 self.loading = true
+                defer {self.loading = false}
                 self.captureSession.stopRunning()
                 self.captureSession.beginConfiguration()
                 // Select camera in-camera or out-camera
@@ -202,7 +203,6 @@ final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
                 self.captureSession.commitConfiguration()
                 self.videoOutput.connection(with: .video)?.videoRotationAngle = 90
                 self.captureSession.startRunning()
-                self.loading = false
             } catch let error {
                 print(error.localizedDescription)
             }
@@ -390,7 +390,7 @@ extension SimpleVideoCaptureInteractor: AVCaptureVideoDataOutputSampleBufferDele
             
             // Run pose estimation
             do {
-                let (result, times) = try estimator.estimateSinglePose(
+                let (result, _) = try estimator.estimateSinglePose(
                     on: pixelBuffer)
                 
                 // Return to main thread to show detection results on the app UI.

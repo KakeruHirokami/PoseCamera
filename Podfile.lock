@@ -1,23 +1,23 @@
 PODS:
-  - LiteRTC (0.0.1-nightly.20241024):
-    - LiteRTC/Core (= 0.0.1-nightly.20241024)
-  - LiteRTC/Core (0.0.1-nightly.20241024)
-  - LiteRTC/CoreML (0.0.1-nightly.20241024):
+  - LiteRTC (0.0.1-nightly.20241215):
+    - LiteRTC/Core (= 0.0.1-nightly.20241215)
+  - LiteRTC/Core (0.0.1-nightly.20241215)
+  - LiteRTC/CoreML (0.0.1-nightly.20241215):
     - LiteRTC/Core
-  - LiteRTC/Metal (0.0.1-nightly.20241024):
+  - LiteRTC/Metal (0.0.1-nightly.20241215):
     - LiteRTC/Core
-  - LiteRTSwift/Core (0.0.1-nightly.20241024):
-    - LiteRTC (= 0.0.1-nightly.20241024)
-    - LiteRTSwift/Privacy (= 0.0.1-nightly.20241024)
-  - LiteRTSwift/CoreML (0.0.1-nightly.20241024):
-    - LiteRTC/CoreML (= 0.0.1-nightly.20241024)
-    - LiteRTSwift/Core (= 0.0.1-nightly.20241024)
-    - LiteRTSwift/Privacy (= 0.0.1-nightly.20241024)
-  - LiteRTSwift/Metal (0.0.1-nightly.20241024):
-    - LiteRTC/Metal (= 0.0.1-nightly.20241024)
-    - LiteRTSwift/Core (= 0.0.1-nightly.20241024)
-    - LiteRTSwift/Privacy (= 0.0.1-nightly.20241024)
-  - LiteRTSwift/Privacy (0.0.1-nightly.20241024)
+  - LiteRTSwift/Core (0.0.1-nightly.20241215):
+    - LiteRTC (= 0.0.1-nightly.20241215)
+    - LiteRTSwift/Privacy (= 0.0.1-nightly.20241215)
+  - LiteRTSwift/CoreML (0.0.1-nightly.20241215):
+    - LiteRTC/CoreML (= 0.0.1-nightly.20241215)
+    - LiteRTSwift/Core (= 0.0.1-nightly.20241215)
+    - LiteRTSwift/Privacy (= 0.0.1-nightly.20241215)
+  - LiteRTSwift/Metal (0.0.1-nightly.20241215):
+    - LiteRTC/Metal (= 0.0.1-nightly.20241215)
+    - LiteRTSwift/Core (= 0.0.1-nightly.20241215)
+    - LiteRTSwift/Privacy (= 0.0.1-nightly.20241215)
+  - LiteRTSwift/Privacy (0.0.1-nightly.20241215)
 
 DEPENDENCIES:
   - LiteRTSwift/CoreML (~> 0.0.1-nightly)
@@ -29,8 +29,8 @@ SPEC REPOS:
     - LiteRTSwift
 
 SPEC CHECKSUMS:
-  LiteRTC: 14f3e85fa0216befcccbc6146f748162380a7053
-  LiteRTSwift: 221f4c681c36c1777beff1dff785e9ef78d54d70
+  LiteRTC: 9a03c446384f2e9afbeb6b65a07d2b1521f0cad8
+  LiteRTSwift: 4408aeea32eff54c073dc2dacdf1d29791d0a829
 
 PODFILE CHECKSUM: c3bf87de54f8c8b53dedcb3fb886cfdc7393d7c4
 
