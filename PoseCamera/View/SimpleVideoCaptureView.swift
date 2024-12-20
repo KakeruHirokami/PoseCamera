@@ -7,21 +7,26 @@
 
 import SwiftUI
 
-extension CALayer: @retroactive ObservableObject {}
-
 struct SimpleVideoCaptureView: View {
     @ObservedObject
     var presenter: SimpleVideoCapturePresenter
+    
+    func contact() {
+        let url: URL = URL(string: "https://forms.gle/sPssvpcViQ2JzKrs5")!
+        UIApplication.shared.open(url)
+    }
     
     var body: some View {
         NavigationStack {
             VStack {
                 HStack(alignment: .center) {
                     Menu {
-                        NavigationLink("お問い合せ") {
-                            ContactView()
+                        Button {
+                            contact()
+                        } label: {
+                            Text(String(localized: "contact"))
                         }
-                        NavigationLink("開発者に寄付") {
+                        NavigationLink(String(localized: "donate")) {
                             DonateView()
                         }
                     } label: {
@@ -77,22 +82,6 @@ struct SimpleVideoCaptureView: View {
                 self.presenter.apply(inputs: .onAppear)
             }
         }
-    }
-}
-
-struct CALayerView: UIViewControllerRepresentable {
-    typealias UIViewControllerType = UIViewController
-    var caLayer: CALayer
-    
-    func makeUIViewController(context: Context) -> UIViewController {
-        let viewController = UIViewController()
-        viewController.view.layer.addSublayer(caLayer)
-        caLayer.frame = viewController.view.layer.frame
-        return viewController
-    }
-    
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-        caLayer.frame = uiViewController.view.layer.frame
     }
 }
 

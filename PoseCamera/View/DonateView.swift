@@ -17,6 +17,9 @@ struct DonateView: View {
     
     @State
     private var purchased: Bool = false
+    
+    @State
+    private var updatesTask: Task<Void, Never>?
 
     private func loadProducts() async throws {
         products = try await Product.products(for: productIds)
@@ -47,10 +50,29 @@ struct DonateView: View {
                 break
         }
     }
+
+    private func listenForTransactionUpdates() {
+        updatesTask = Task {
+            for await transaction in Transaction.updates {
+                switch transaction {
+                case let .verified(transaction):
+                    // 購入が確認された場合、終了処理をする
+                    await transaction.finish()
+                    purchased = true
+                case .unverified:
+                    // 購入が確認できない場合
+                    break
+                }
+            }
+        }
+    }
     
     var body: some View {
         ZStack {
             VStack(spacing: 20) {
+                Text(String(localized: "donate_title"))
+                    .font(.title)
+                    .padding(20)
                 ForEach(self.products) { product in
                     Button {
                         Task {
@@ -61,20 +83,25 @@ struct DonateView: View {
                             }
                         }
                     } label: {
-                        Text("\(product.displayPrice) - \(product.displayName)")
-                            .foregroundColor(.white)
+                        VStack {
+                            Text("\(product.displayPrice) - \(product.displayName)")
+                            Text(product.description)
+                                .foregroundColor(Color.white)
+                                .font(.caption)
+                        }.foregroundColor(.white)
                             .padding()
                             .background(.blue)
                             .clipShape(Capsule())
                     }
                 }
-                Text("PoseCameraは無料ですが、アプリの開発・メンテナンス・公開には費用がかかります。気に入っていただけたら、ぜひチップをお願いします。")
+                Text(String(localized: "donate_discription"))
                     .foregroundColor(Color.gray)
                     .font(.caption)
                     .padding(20)
             }.task {
                 do {
                     try await self.loadProducts()
+                    listenForTransactionUpdates()
                 } catch {
                     print(error)
                 }

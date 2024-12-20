@@ -1,7 +1,18 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@ - %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ - %2$@"
+          }
+        }
+      }
+    },
     "contact" : {
+      "comment" : "a",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -19,6 +30,7 @@
       }
     },
     "donate" : {
+      "comment" : "a",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -26,8 +38,80 @@
             "state" : "translated",
             "value" : "Donate"
           }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "寄付"
+          }
         }
       }
+    },
+    "donate_discription" : {
+      "comment" : "a",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PoseCamera is free to use, but developing, maintaining, and publishing the app involves costs."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PoseCameraは無料ですが、アプリの開発・メンテナンス・公開には費用がかかります。"
+          }
+        }
+      }
+    },
+    "donate_title" : {
+      "comment" : "a",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Give me some energy!!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開発者に英気を！"
+          }
+        }
+      }
+    },
+    "example@example.com" : {
+
+    },
+    "OK" : {
+
+    },
+    "アプリについてのご質問や機能リクエストなどございましたら、気軽に下記のフォームよりお問い合わせください" : {
+
+    },
+    "お名前" : {
+
+    },
+    "お名前を入力" : {
+
+    },
+    "お問い合わせ" : {
+
+    },
+    "お問い合わせ内容" : {
+
+    },
+    "メールアドレス" : {
+
+    },
+    "送信" : {
+
+    },
+    "送信結果" : {
+
     }
   },
   "version" : "1.0"

@@ -20,9 +20,14 @@
       "internalID" : "6739492990",
       "localizations" : [
         {
-          "description" : "チップ（大）",
+          "description" : "開発者に寿司を奢る",
           "displayName" : "チップ（大）",
           "locale" : "ja"
+        },
+        {
+          "description" : "Treat the developer a sushi",
+          "displayName" : "Tip(L)",
+          "locale" : "en_US"
         }
       ],
       "productID" : "tip.l",
@@ -35,7 +40,12 @@
       "internalID" : "6739493015",
       "localizations" : [
         {
-          "description" : "チップ（中）",
+          "description" : "Treat the developer a ramen",
+          "displayName" : "Tip(M)",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "開発者にラーメンを奢る",
           "displayName" : "チップ（中）",
           "locale" : "ja"
         }
@@ -50,9 +60,14 @@
       "internalID" : "6739492727",
       "localizations" : [
         {
-          "description" : "チップ（小）",
+          "description" : "開発者にビールを奢る",
           "displayName" : "チップ（小）",
           "locale" : "ja"
+        },
+        {
+          "description" : "Treat the developer a beer",
+          "displayName" : "Tip(S)",
+          "locale" : "en_US"
         }
       ],
       "productID" : "tip.s",
@@ -65,7 +80,12 @@
       "internalID" : "6739492991",
       "localizations" : [
         {
-          "description" : "チップ（特大）",
+          "description" : "Treat the developer a Steak",
+          "displayName" : "Tip(XL)",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "開発者にステーキを奢る",
           "displayName" : "チップ（特大）",
           "locale" : "ja"
         }
@@ -79,9 +99,9 @@
     "_applicationInternalID" : "6739467488",
     "_developerTeamID" : "957YJ3B6F4",
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 756047346.078004,
-    "_locale" : "ja",
-    "_storefront" : "JPN",
+    "_lastSynchronizedDate" : 756396602.97995102,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
     "_storeKitErrors" : [
       {
         "current" : {

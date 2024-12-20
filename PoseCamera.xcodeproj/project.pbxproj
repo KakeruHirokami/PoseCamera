@@ -33,6 +33,7 @@
 		B053839E2D0EC845004D889D /* ContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B053839D2D0EC842004D889D /* ContactView.swift */; };
 		B05383A02D0ED05C004D889D /* DonateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B053839F2D0ED058004D889D /* DonateView.swift */; };
 		B0AD6E5C2D119C6700EC73D3 /* Confetti in Frameworks */ = {isa = PBXBuildFile; productRef = B0AD6E5B2D119C6700EC73D3 /* Confetti */; };
+		B0AD6E5E2D15AF7900EC73D3 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B0AD6E5D2D15AF7900EC73D3 /* Localizable.xcstrings */; };
 		D57EC203B0BA1756B0C8B05F /* Pods_PoseCamera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF2B46F5EF2CAE4AF48F05B1 /* Pods_PoseCamera.framework */; };
 		FDD796D390C27A9E2A15134B /* Pods_PoseCamera_PoseCameraUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5896A02CADC9FDB247FDA8D /* Pods_PoseCamera_PoseCameraUITests.framework */; };
 /* End PBXBuildFile section */
@@ -156,7 +157,7 @@
 		B023B6BA2CCE8B6000766BB3 /* PoseCameraUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseCameraUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B053839D2D0EC842004D889D /* ContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactView.swift; sourceTree = "<group>"; };
 		B053839F2D0ED058004D889D /* DonateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateView.swift; sourceTree = "<group>"; };
-		B05383A62D0F0EA8004D889D /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		B0AD6E5D2D15AF7900EC73D3 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		BB16055E59065A9CC8145FCC /* Pods-PoseCamera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PoseCamera.debug.xcconfig"; path = "Target Support Files/Pods-PoseCamera/Pods-PoseCamera.debug.xcconfig"; sourceTree = "<group>"; };
 		C5896A02CADC9FDB247FDA8D /* Pods_PoseCamera_PoseCameraUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PoseCamera_PoseCameraUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D90700BAC735A53FEFD86111 /* Pods-PoseCamera-PoseCameraUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PoseCamera-PoseCameraUITests.release.xcconfig"; path = "Target Support Files/Pods-PoseCamera-PoseCameraUITests/Pods-PoseCamera-PoseCameraUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -221,8 +222,8 @@
 		B005AE672CCD2A2E00482E55 = {
 			isa = PBXGroup;
 			children = (
-				B05383A62D0F0EA8004D889D /* Localizable.xcstrings */,
 				B020350C2D103F8B00E61E49 /* StorekitConfig.storekit */,
+				B0AD6E5D2D15AF7900EC73D3 /* Localizable.xcstrings */,
 				B023B6A12CCE8B5B00766BB3 /* PoseCamera */,
 				B02035682D10542D00E61E49 /* PoseCameraTests */,
 				B023B6BB2CCE8B6000766BB3 /* PoseCameraUITests */,
@@ -612,6 +613,8 @@
 			knownRegions = (
 				en,
 				ja,
+				Base,
+				cs,
 			);
 			mainGroup = B005AE672CCD2A2E00482E55;
 			minimizedProjectReferenceProxies = 1;
@@ -636,6 +639,7 @@
 			files = (
 				B023B6B12CCE8B5B00766BB3 /* movenet_lightning.tflite in Resources */,
 				B023B6B22CCE8B5B00766BB3 /* movenet_thunder.tflite in Resources */,
+				B0AD6E5E2D15AF7900EC73D3 /* Localizable.xcstrings in Resources */,
 				B023B6B32CCE8B5B00766BB3 /* posenet.tflite in Resources */,
 				B023B6B42CCE8B5B00766BB3 /* Preview Assets.xcassets in Resources */,
 				B023B6B52CCE8B5B00766BB3 /* Assets.xcassets in Resources */,
