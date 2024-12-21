@@ -158,6 +158,7 @@
 		B053839D2D0EC842004D889D /* ContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactView.swift; sourceTree = "<group>"; };
 		B053839F2D0ED058004D889D /* DonateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateView.swift; sourceTree = "<group>"; };
 		B0AD6E5D2D15AF7900EC73D3 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		B0AD6E5F2D1661F600EC73D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BB16055E59065A9CC8145FCC /* Pods-PoseCamera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PoseCamera.debug.xcconfig"; path = "Target Support Files/Pods-PoseCamera/Pods-PoseCamera.debug.xcconfig"; sourceTree = "<group>"; };
 		C5896A02CADC9FDB247FDA8D /* Pods_PoseCamera_PoseCameraUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PoseCamera_PoseCameraUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D90700BAC735A53FEFD86111 /* Pods-PoseCamera-PoseCameraUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PoseCamera-PoseCameraUITests.release.xcconfig"; path = "Target Support Files/Pods-PoseCamera-PoseCameraUITests/Pods-PoseCamera-PoseCameraUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -502,6 +503,7 @@
 		B023B6A12CCE8B5B00766BB3 /* PoseCamera */ = {
 			isa = PBXGroup;
 			children = (
+				B0AD6E5F2D1661F600EC73D3 /* Info.plist */,
 				B020356A2D10545500E61E49 /* Predictor */,
 				B023B68C2CCE8B5B00766BB3 /* Extentions */,
 				B023B6952CCE8B5B00766BB3 /* Model */,
@@ -957,10 +959,11 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PoseCamera/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PoseCamera;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
-				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME) needs camera access.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "$(PRODUCT_NAME) needs photo library access.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "PoseCamera needs camera access.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "PoseCamera needs photo library access.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -995,10 +998,11 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PoseCamera/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PoseCamera;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
-				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME) needs camera access.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "$(PRODUCT_NAME) needs photo library access.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "PoseCamera needs camera access.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "PoseCamera needs photo library access.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
