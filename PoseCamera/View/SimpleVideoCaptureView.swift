@@ -15,6 +15,10 @@ struct SimpleVideoCaptureView: View {
         let url: URL = URL(string: "https://forms.gle/sPssvpcViQ2JzKrs5")!
         UIApplication.shared.open(url)
     }
+    func privacyPolicy() {
+        let url: URL = URL(string: "https://www.termsfeed.com/live/28e9e51c-9798-4b21-b891-9f50111849a0")!
+        UIApplication.shared.open(url)
+    }
     
     var body: some View {
         NavigationStack {
@@ -24,10 +28,15 @@ struct SimpleVideoCaptureView: View {
                         Button {
                             contact()
                         } label: {
-                            Text(String(localized: "contact"))
+                            Text(String(localized: "Contact"))
                         }
-                        NavigationLink(String(localized: "donate")) {
+                        NavigationLink(String(localized: "Donate")) {
                             DonateView()
+                        }
+                        Button {
+                            privacyPolicy()
+                        } label: {
+                            Text(String(localized: "PrivacyPolicy"))
                         }
                     } label: {
                         Image(systemName: "ellipsis")

@@ -29,6 +29,33 @@
         }
       }
     },
+    "Contact" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "お問い合せ"
+          }
+        }
+      }
+    },
+    "Do not operate the screen." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do not operate the screen."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "画面を操作しないでください。"
+          }
+        }
+      }
+    },
     "donate" : {
       "comment" : "a",
       "extractionState" : "manual",
@@ -47,25 +74,17 @@
         }
       }
     },
-    "donate_discription" : {
-      "comment" : "a",
-      "extractionState" : "manual",
+    "Donate" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "PoseCamera is free to use, but developing, maintaining, and publishing the app involves costs."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PoseCameraは無料ですが、アプリの開発・メンテナンス・公開には費用がかかります。"
+            "value" : "寄付"
           }
         }
       }
     },
-    "donate_title" : {
+    "Give me some energy!!" : {
       "comment" : "a",
       "extractionState" : "manual",
       "localizations" : {
@@ -83,35 +102,57 @@
         }
       }
     },
-    "example@example.com" : {
-
+    "PoseCamera is free to use, but developing, maintaining, and publishing the app involves costs." : {
+      "comment" : "a",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PoseCamera is free to use, but developing, maintaining, and publishing the app involves costs."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PoseCameraは無料ですが、アプリの開発・メンテナンス・公開には費用がかかります。"
+          }
+        }
+      }
     },
-    "OK" : {
-
+    "PrivacyPolicy" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PrivacyPolicy"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プライバシーポリシー"
+          }
+        }
+      }
     },
-    "アプリについてのご質問や機能リクエストなどございましたら、気軽に下記のフォームよりお問い合わせください" : {
-
-    },
-    "お名前" : {
-
-    },
-    "お名前を入力" : {
-
-    },
-    "お問い合わせ" : {
-
-    },
-    "お問い合わせ内容" : {
-
-    },
-    "メールアドレス" : {
-
-    },
-    "送信" : {
-
-    },
-    "送信結果" : {
-
+    "Purchase processing in progress." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Purchase processing in progress."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "購入処理中です。"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
