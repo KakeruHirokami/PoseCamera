@@ -133,7 +133,7 @@ final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
         }
     }
     
-    func startSettion() {
+    func startSession() {
         if captureSession.isRunning { return }
         DispatchQueue.global(qos: .background).async {
             self.captureSession.addOutput(self.videoOutput)
@@ -142,7 +142,7 @@ final class SimpleVideoCaptureInteractor: NSObject, ObservableObject {
         }
     }
     
-    func stopSettion() {
+    func stopSession() {
         if !captureSession.isRunning { return }
         captureSession.stopRunning()
     }

@@ -33,6 +33,9 @@
 		B05383A02D0ED05C004D889D /* DonateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B053839F2D0ED058004D889D /* DonateView.swift */; };
 		B0AD6E5C2D119C6700EC73D3 /* Confetti in Frameworks */ = {isa = PBXBuildFile; productRef = B0AD6E5B2D119C6700EC73D3 /* Confetti */; };
 		B0AD6E5E2D15AF7900EC73D3 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B0AD6E5D2D15AF7900EC73D3 /* Localizable.xcstrings */; };
+		B0AD6E612D18383D00EC73D3 /* SimpleVideoCaptureInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AD6E602D18383D00EC73D3 /* SimpleVideoCaptureInteractorMock.swift */; };
+		B0AD6E632D18384700EC73D3 /* SimpleVideoCapturePresenterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AD6E622D18384700EC73D3 /* SimpleVideoCapturePresenterMock.swift */; };
+		B0AD6E652D18425000EC73D3 /* SimpleVideoCaptureViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AD6E642D18425000EC73D3 /* SimpleVideoCaptureViewMock.swift */; };
 		D57EC203B0BA1756B0C8B05F /* Pods_PoseCamera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF2B46F5EF2CAE4AF48F05B1 /* Pods_PoseCamera.framework */; };
 		FDD796D390C27A9E2A15134B /* Pods_PoseCamera_PoseCameraUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5896A02CADC9FDB247FDA8D /* Pods_PoseCamera_PoseCameraUITests.framework */; };
 /* End PBXBuildFile section */
@@ -157,6 +160,9 @@
 		B053839F2D0ED058004D889D /* DonateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateView.swift; sourceTree = "<group>"; };
 		B0AD6E5D2D15AF7900EC73D3 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		B0AD6E5F2D1661F600EC73D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B0AD6E602D18383D00EC73D3 /* SimpleVideoCaptureInteractorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleVideoCaptureInteractorMock.swift; sourceTree = "<group>"; };
+		B0AD6E622D18384700EC73D3 /* SimpleVideoCapturePresenterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleVideoCapturePresenterMock.swift; sourceTree = "<group>"; };
+		B0AD6E642D18425000EC73D3 /* SimpleVideoCaptureViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleVideoCaptureViewMock.swift; sourceTree = "<group>"; };
 		BB16055E59065A9CC8145FCC /* Pods-PoseCamera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PoseCamera.debug.xcconfig"; path = "Target Support Files/Pods-PoseCamera/Pods-PoseCamera.debug.xcconfig"; sourceTree = "<group>"; };
 		C5896A02CADC9FDB247FDA8D /* Pods_PoseCamera_PoseCameraUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PoseCamera_PoseCameraUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D90700BAC735A53FEFD86111 /* Pods-PoseCamera-PoseCameraUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PoseCamera-PoseCameraUITests.release.xcconfig"; path = "Target Support Files/Pods-PoseCamera-PoseCameraUITests/Pods-PoseCamera-PoseCameraUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -491,8 +497,11 @@
 				B053839F2D0ED058004D889D /* DonateView.swift */,
 				B023B6982CCE8B5B00766BB3 /* OverlayView.swift */,
 				B023B6992CCE8B5B00766BB3 /* SimpleVideoCaptureInteractor.swift */,
+				B0AD6E602D18383D00EC73D3 /* SimpleVideoCaptureInteractorMock.swift */,
 				B023B69A2CCE8B5B00766BB3 /* SimpleVideoCapturePresenter.swift */,
+				B0AD6E622D18384700EC73D3 /* SimpleVideoCapturePresenterMock.swift */,
 				B023B69B2CCE8B5B00766BB3 /* SimpleVideoCaptureView.swift */,
+				B0AD6E642D18425000EC73D3 /* SimpleVideoCaptureViewMock.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -769,10 +778,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0AD6E612D18383D00EC73D3 /* SimpleVideoCaptureInteractorMock.swift in Sources */,
 				B023B6A22CCE8B5B00766BB3 /* CGSize+TFLite.swift in Sources */,
 				B023B6A32CCE8B5B00766BB3 /* CVPixelBuffer+TFLite.swift in Sources */,
 				B023B6A42CCE8B5B00766BB3 /* Data+TFLite.swift in Sources */,
+				B0AD6E652D18425000EC73D3 /* SimpleVideoCaptureViewMock.swift in Sources */,
 				B023B6A52CCE8B5B00766BB3 /* MoveNet.swift in Sources */,
+				B0AD6E632D18384700EC73D3 /* SimpleVideoCapturePresenterMock.swift in Sources */,
 				B023B6A62CCE8B5B00766BB3 /* PoseConfig.swift in Sources */,
 				B023B6A72CCE8B5B00766BB3 /* PoseData.swift in Sources */,
 				B023B6A82CCE8B5B00766BB3 /* PoseEstimator.swift in Sources */,
